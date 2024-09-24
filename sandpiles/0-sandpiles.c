@@ -5,7 +5,7 @@
 static void print_grid(int grid[3][3])
 {
 	int i, j;
-	
+
 	for (i = 0; i < 3; i++)
 	{
 		for (j = 0; j < 3; j++)
@@ -22,16 +22,16 @@ static void print_grid(int grid[3][3])
 int stable(int grid[3][3])
 {
 	int i, j;
-	
+
 	for (i = 0; i < 3; i++)
 	{
 		for (j = 0; j < 3; j++)
 		{
 			if (grid[i][j] > 3)
-				return 0;  /* Unstable */
+				return (0);  /* Unstable */
 		}
 	}
-	return 1;  /* Stable */
+	return (1);  /* Stable */
 }
 
 /* Function to topple unstable cells */
