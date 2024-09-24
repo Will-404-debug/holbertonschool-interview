@@ -23,7 +23,7 @@ static void print_grid(int grid[3][3])
 	}
 }
 
-/** 
+/**
  * stable - Check if a grid is stable
  * @grid: The 3x3 grid to be checked
  *
@@ -46,7 +46,7 @@ int stable(int grid[3][3])
 	return (1);  /* Stable */
 }
 
-/** 
+/**
  * topple - Topple unstable cells in the grid
  * @grid: The 3x3 grid to be processed
  *
@@ -90,7 +90,7 @@ void topple(int grid[3][3])
 	}
 }
 
-/** 
+/**
  * sandpiles_sum - Compute the sum of two sandpiles
  * @grid1: The first 3x3 grid (output grid)
  * @grid2: The second 3x3 grid
