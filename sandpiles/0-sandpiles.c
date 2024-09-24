@@ -1,7 +1,12 @@
 #include <stdio.h>
 #include "sandpiles.h"
 
-/* Function to print a 3x3 grid */
+/**
+ * print_grid - Print a 3x3 grid
+ * @grid: The 3x3 grid to be printed
+ *
+ * This function prints the grid in a formatted manner.
+ */
 static void print_grid(int grid[3][3])
 {
 	int i, j;
@@ -18,7 +23,14 @@ static void print_grid(int grid[3][3])
 	}
 }
 
-/* Function to check if a grid is stable */
+/** 
+ * stable - Check if a grid is stable
+ * @grid: The 3x3 grid to be checked
+ *
+ * Return: 1 if stable, 0 if unstable.
+ *
+ * A grid is stable if none of its cells contain more than 3 grains.
+ */
 int stable(int grid[3][3])
 {
 	int i, j;
@@ -34,7 +46,13 @@ int stable(int grid[3][3])
 	return (1);  /* Stable */
 }
 
-/* Function to topple unstable cells */
+/** 
+ * topple - Topple unstable cells in the grid
+ * @grid: The 3x3 grid to be processed
+ *
+ * This function redistributes grains from cells that have more than 3 grains
+ * to their neighboring cells.
+ */
 void topple(int grid[3][3])
 {
 	int temp[3][3] = {0};  /* Temporary grid for changes */
@@ -72,7 +90,14 @@ void topple(int grid[3][3])
 	}
 }
 
-/* Main function to compute the sum of two sandpiles */
+/** 
+ * sandpiles_sum - Compute the sum of two sandpiles
+ * @grid1: The first 3x3 grid (output grid)
+ * @grid2: The second 3x3 grid
+ *
+ * This function computes the sum of two sandpiles and ensures that the
+ * result is stable. The result is stored in grid1.
+ */
 void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 {
 	int i, j;
