@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-
+"""
+This module contains a function `canUnlockAll` that determines whether all
+boxes in a list of lists can be unlocked.
+"""
 def canUnlockAll(boxes):
     """
     Determines if all boxes can be unlocked.
