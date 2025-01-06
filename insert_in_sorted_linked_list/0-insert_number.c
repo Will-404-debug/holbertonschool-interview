@@ -8,11 +8,11 @@
  * 
  * Return: Adress of the new node, or NULL if it failed.
  */ 
-listint_t *insert_node(lisint_t **head, int number)
+listint_t *insert_node(listint_t **head, int number)
 {
     listint_t *new_node, *current, *prev;
 
-    new_node = malloc(sizeof(lisint_t));
+    new_node = malloc(sizeof(listint_t));
     if (new_node == NULL)
         return (NULL);
     
