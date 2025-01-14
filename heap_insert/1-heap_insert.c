@@ -9,17 +9,18 @@
  */
 heap_t *heapify_up(heap_t *node)
 {
-    int temp;
+	heap_t *current = node;
+	int temp;
 
-    while (node->parent && node->n > node->parent->n)
-    {
-        temp = node->n;
-        node->n = node->parent->n;
-        node->parent->n = temp;
-        node = node->parent;
-    }
+	while (current->parent && current->n > current->parent->n)
+	{
+		temp = current->n;
+		current->n = current->parent->n;
+		current->parent->n = temp;
+		current = current->parent;
+	}
 
-    return (node);
+	return (current);
 }
 
 /**
@@ -30,23 +31,23 @@ heap_t *heapify_up(heap_t *node)
  */
 heap_t *find_insert_position(heap_t *root)
 {
-    heap_t *queue[1024];
-    int front = 0, back = 0;
+	heap_t *queue[1024];
+	int front = 0, back = 0;
 
-    queue[back++] = root;
+	queue[back++] = root;
 
-    while (front < back)
-    {
-        heap_t *current = queue[front++];
+	while (front < back)
+	{
+		heap_t *current = queue[front++];
 
-        if (!current->left || !current->right)
-            return (current);
+		if (!current->left || !current->right)
+			return (current);
 
-        queue[back++] = current->left;
-        queue[back++] = current->right;
-    }
+		queue[back++] = current->left;
+		queue[back++] = current->right;
+	}
 
-    return (NULL);
+	return (NULL);
 }
 
 /**
@@ -58,27 +59,27 @@ heap_t *find_insert_position(heap_t *root)
  */
 heap_t *heap_insert(heap_t **root, int value)
 {
-    heap_t *new_node, *parent;
+	heap_t *new_node, *parent;
 
-    if (!root)
-        return (NULL);
+	if (!root)
+		return (NULL);
 
-    if (*root == NULL)
-    {
-        *root = binary_tree_node(NULL, value);
-        return (*root);
-    }
+	if (*root == NULL)
+	{
+		*root = binary_tree_node(NULL, value);
+		return (*root);
+	}
 
-    parent = find_insert_position(*root);
+	parent = find_insert_position(*root);
 
-    new_node = binary_tree_node(parent, value);
-    if (!new_node)
-        return (NULL);
+	new_node = binary_tree_node(parent, value);
+	if (!new_node)
+		return (NULL);
 
-    if (!parent->left)
-        parent->left = new_node;
-    else
-        parent->right = new_node;
+	if (!parent->left)
+		parent->left = new_node;
+	else
+		parent->right = new_node;
 
-    return (heapify_up(new_node));
+	return (heapify_up(new_node));
 }
