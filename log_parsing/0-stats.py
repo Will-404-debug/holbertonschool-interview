@@ -72,4 +72,3 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print_metrics()  # Print final stats before exiting
         sys.exit(0)  # Exit cleanly without traceback
-  
