@@ -25,7 +25,8 @@ def print_metrics():
     Prints the computed metrics to stdout.
     """
     print(f"File size: {total_file_size}")
-    sys.stdout.flush()  # Ensure output is displayed
+    # Ensure output is displayed
+    sys.stdout.flush()
     for status_code in sorted(status_code_count.keys()):
         if status_code_count[status_code] > 0:
             print(f"{status_code}: {status_code_count[status_code]}")
@@ -49,7 +50,7 @@ if __name__ == "__main__":
                 file_size = int(file_size)
                 total_file_size += file_size
             except ValueError:
-                continue   # Skip line if file size is not a valid integer
+                continue
 
             # Validate and count status codes
             if status_code in status_code_count:
