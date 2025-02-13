@@ -1,4 +1,12 @@
 #!/usr/bin/python3
+"""
+Log parsing script.
+
+This script reads lines from stdin, extracts HTTP status codes and file sizes,
+and computes statistics. It prints the total file size and counts of each status code
+every 10 lines and upon receiving a keyboard interruption (CTRL + C).
+"""
+
 import sys
 
 def print_stats(total_size, status_counts):
