@@ -66,7 +66,7 @@ if __name__ == "__main__":
             print_metrics()
         else:
             # Print "File size: 0" for empty files
-            print("File size:0")
+            print("File size: 0") # Added space after colon haha
             sys.stdout.flush()
 
     except KeyboardInterrupt:
