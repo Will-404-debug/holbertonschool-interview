@@ -1,54 +1,66 @@
 #!/usr/bin/python3
 """
-    Continuously reads input lines and processes them to compute metrics:
+Continuously reads input lines and processes them to compute metrics.
+
+The script:
+- Tracks total file size.
+- Counts occurrences of specific HTTP status codes.
+- Prints metrics every 10 lines or on keyboard interruption (CTRL + C).
+
+Expected input format:
+<IP Address> - [<date>] "GET /projects/260 HTTP/1.1" <status code> <file size>
 """
+
 import sys
 
+# Initialize variables
 total_file_size = 0
 line_count = 0
-valid_status_codes = ['200', '301', '400', '401', '403', '404', '405', '500']
+valid_status_codes = {'200', '301', '400', '401', '403', '404', '405', '500'}
 status_code_count = {code: 0 for code in valid_status_codes}
-has_printed_final = False
 
 
 def print_metrics():
     """
-
     Prints the computed metrics to stdout.
     """
+    global total_file_size, status_code_count  # Ensure we modify global variables
     print(f"File size: {total_file_size}")
-    for status_code in sorted(valid_status_codes):
+    for status_code in sorted(status_code_count.keys()):
         if status_code_count[status_code] > 0:
             print(f"{status_code}: {status_code_count[status_code]}")
 
 
 if __name__ == "__main__":
     try:
-        has_printed_final = False
-
         for line in sys.stdin:
-            words = line.split()
+            parts = line.split()
+            
+            # Ensure line has enough parts
+            if len(parts) < 7:
+                continue
 
-            if len(words) >= 2:
-                status_code = words[-2]
-                try:
-                    file_size = int(words[-1])
-                    total_file_size += file_size
-                except ValueError:
-                    continue
-                if status_code in status_code_count:
-                    status_code_count[status_code] += 1
+            status_code = parts[-2]
+            file_size = parts[-1]
 
-                line_count += 1
+            # Validate file size (should be an integer)
+            try:
+                file_size = int(file_size)
+                total_file_size += file_size
+            except ValueError:
+                continue  # Skip line if file size is not a valid integer
 
-                if line_count % 10 == 0:
-                    print_metrics()
-                    has_printed_final = True
+            # Validate and count status codes
+            if status_code in status_code_count:
+                status_code_count[status_code] += 1
 
-        if not has_printed_final or line_count % 10 != 0:
-            print_metrics()
+            line_count += 1
+
+            # Print metrics every 10 lines
+            if line_count % 10 == 0:
+                print_metrics()
 
     except KeyboardInterrupt:
-        print_metrics()
-        raise
-    
+        print_metrics()  # Print final stats before exiting
+        raise  # Re-raise to ensure proper exit handling
+  
