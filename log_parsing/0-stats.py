@@ -1,70 +1,54 @@
 #!/usr/bin/python3
 """
-This script reads lines from standard input (stdin), processes log entries,
-and computes aggregate metrics. It tracks:
-- The total file size processed.
-- The count of occurrences for specific HTTP status codes.
-
-Statistics are printed:
-- Every 10 lines.
-- On receiving a keyboard interrupt (CTRL + C).
-
-Expected log format:
-<IP Address> - [<date>] "GET /projects/260 HTTP/1.1" <status code> <file size>
-
-Example:
-123.45.67.89 - [2022-03-15 14:32:00] "GET /projects/260 HTTP/1.1" 200 1024
+    Continuously reads input lines and processes them to compute metrics:
 """
-
 import sys
 
-def print_stats(total_size, status_counts):
-    """
-    Prints the accumulated file size and status code counts in sorted order.
-
-    Args:
-        total_size (int): The total file size accumulated.
-        status_counts (dict): Dictionary with status codes as keys
-                              and their occurrences as values.
-    """
-    print("File size: {}".format(total_size))
-    for code in sorted(status_counts.keys()):
-        print("{}: {}".format(code, status_counts[code]))
-
-# Initialize tracking variables
-total_size = 0
-status_counts = {}
-valid_status_codes = {'200', '301', '400', '401', '403', '404', '405', '500'}
+total_file_size = 0
 line_count = 0
+valid_status_codes = ['200', '301', '400', '401', '403', '404', '405', '500']
+status_code_count = {code: 0 for code in valid_status_codes}
+has_printed_final = False
 
-try:
-    for line in sys.stdin:
-        parts = line.split()
-        
-        # Ensure the line follows the expected format
-        if len(parts) < 7:
-            continue
-        
-        try:
-            status_code = parts[-2]
-            file_size = int(parts[-1])
 
-            # Update total file size
-            total_size += file_size
+def print_metrics():
+    """
 
-            # Update status code counts if valid
-            if status_code in valid_status_codes:
-                status_counts[status_code] = status_counts.get(status_code, 0) + 1
+    Prints the computed metrics to stdout.
+    """
+    print(f"File size: {total_file_size}")
+    for status_code in sorted(valid_status_codes):
+        if status_code_count[status_code] > 0:
+            print(f"{status_code}: {status_code_count[status_code]}")
 
-            line_count += 1
 
-            # Print statistics every 10 lines
-            if line_count % 10 == 0:
-                print_stats(total_size, status_counts)
+if __name__ == "__main__":
+    try:
+        has_printed_final = False
 
-        except ValueError:
-            continue  # Skip the line if file size is not an integer
+        for line in sys.stdin:
+            words = line.split()
 
-except KeyboardInterrupt:
-    print_stats(total_size, status_counts)
-    raise  # Re-raise the exception for proper exit handling
+            if len(words) >= 2:
+                status_code = words[-2]
+                try:
+                    file_size = int(words[-1])
+                    total_file_size += file_size
+                except ValueError:
+                    continue
+                if status_code in status_code_count:
+                    status_code_count[status_code] += 1
+
+                line_count += 1
+
+                if line_count % 10 == 0:
+                    print_metrics()
+                    has_printed_final = True
+
+        if not has_printed_final or line_count % 10 != 0:
+            print_metrics()
+
+    except KeyboardInterrupt:
+        print_metrics()
+        raise
+    
