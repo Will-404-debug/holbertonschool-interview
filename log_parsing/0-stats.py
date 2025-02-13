@@ -36,7 +36,7 @@ if __name__ == "__main__":
     try:
         for line in sys.stdin:
             parts = line.split()
-            
+
             # Ensure line has enough parts
             if len(parts) < 7:
                 continue
