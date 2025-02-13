@@ -61,9 +61,9 @@ if __name__ == "__main__":
             if line_count % 10 == 0:
                 print_metrics()
 
-            # Final fix: Ensure output prints even if only 1 line was processed
-            if line_count > 0:  # Always print if at least one valid line was processed
-                print_metrics()
+        # Ensure output prints even if only 1 line was processed
+        if line_count > 0:  # Always print if at least one valid line was processed
+            print_metrics()
 
     except KeyboardInterrupt:
         print_metrics()  # Print final stats before exiting
