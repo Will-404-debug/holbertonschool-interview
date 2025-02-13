@@ -1,8 +1,5 @@
 #!/usr/bin/python3
-
 """
-Log Parsing Script
-
 This script reads lines from standard input (stdin), processes log entries,
 and computes aggregate metrics. It tracks:
 - The total file size processed.
@@ -17,9 +14,6 @@ Expected log format:
 
 Example:
 123.45.67.89 - [2022-03-15 14:32:00] "GET /projects/260 HTTP/1.1" 200 1024
-
-Usage:
-    $ ./0-generator.py | ./0-stats.py
 """
 
 import sys
