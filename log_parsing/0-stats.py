@@ -24,11 +24,12 @@ def print_metrics():
     """
     Prints the computed metrics to stdout.
     """
-    global total_file_size, status_code_count  # Ensure we modify global variables
     print(f"File size: {total_file_size}")
+    sys.stdout.flush()  # Ensure output is displayed immediately
     for status_code in sorted(status_code_count.keys()):
         if status_code_count[status_code] > 0:
             print(f"{status_code}: {status_code_count[status_code]}")
+            sys.stdout.flush()  # Flush after each print
 
 
 if __name__ == "__main__":
@@ -62,5 +63,5 @@ if __name__ == "__main__":
 
     except KeyboardInterrupt:
         print_metrics()  # Print final stats before exiting
-        raise  # Re-raise to ensure proper exit handling
+        sys.exit(0)  # Exit cleanly without traceback
   
