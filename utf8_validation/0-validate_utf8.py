@@ -6,14 +6,15 @@ This module contains a function `validUTF8(data)` that checks whether
 a given dataset represents a valid UTF-8 encoding.
 """
 
+
 def validUTF8(data):
     """
     Determines if a given data set represents a valid UTF-8 encoding.
-    
+
     :param data: List of integers representing bytes
     :return: True if data is a valid UTF-8 encoding, else False
     """
-    num_bytes = 0  # Tracks the number of bytes remaining in the current UTF-8 character
+    num_bytes = 0  # Tracks the number of bytes remaining in the UTF-8 character
 
     for byte in data:
         byte = byte & 0xFF  # Consider only the 8 least significant bits
