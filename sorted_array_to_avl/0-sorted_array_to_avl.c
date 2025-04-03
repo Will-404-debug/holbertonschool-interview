@@ -1,66 +1,44 @@
 #include "binary_trees.h"
 #include <stdlib.h>
 
+/**
+ * create_avl_node - Recursively builds the AVL tree from sorted array
+ * @array: Pointer to the first element of the array
+ * @start: Start index
+ * @end: End index
+ * @parent: Pointer to the parent node
+ * Return: Pointer to the created node
+ */
+avl_t *create_avl_node(int *array, int start, int end, avl_t *parent)
+{
+    avl_t *node;
+    int mid;
+
+    if (start > end)
+        return (NULL);
+
+    mid = (start + end) / 2;
+
+    node = binary_tree_node(parent, array[mid]);
+    if (!node)
+        return (NULL);
+
+    node->left = create_avl_node(array, start, mid - 1, node);
+    node->right = create_avl_node(array, mid + 1, end, node);
+
+    return (node);
+}
 
 /**
- * sorted_array_to_avl - Converts a sorted array to an AVL tree
- * @array: The sorted array
- * @size: The size of the array
- *
- * Return: A pointer to the root of the AVL tree, or NULL on failure
+ * sorted_array_to_avl - Builds an AVL tree from a sorted array
+ * @array: Pointer to first element of the array
+ * @size: Number of elements in the array
+ * Return: Pointer to root node of the AVL tree
  */
 avl_t *sorted_array_to_avl(int *array, size_t size)
 {
-	if (array == NULL || size == 0)
-		return (NULL);
+    if (!array || size == 0)
+        return (NULL);
 
-	return (build_avl(array, 0, (int)size - 1, NULL));
-}
-
-
-/**
- * build_avl - Recursively builds an AVL tree from a sorted array
- * @array: The sorted array
- * @start: The starting index of the subarray
- * @end: The ending index of the subarray
- * @parent: The parent node of the current node
- *
- * Return: A pointer to the root of the AVL tree, or NULL on failure
- */
-avl_t *build_avl(int *array, int start, int end, avl_t *parent)
-{
-	avl_t *root;
-	int mid = (start + end) / 2;
-
-	if (start > end)
-		return (NULL);
-
-	root = create_node(parent, array[mid]);
-	if (root == NULL)
-		return (NULL);
-
-	root->left = build_avl(array, start, mid - 1, root);
-	root->right = build_avl(array, mid + 1, end, root);
-
-	return (root);
-}
-
-/**
- * create_node - Creates a new AVL tree node
- * @parent: The parent node of the new node
- * @value: The value to store in the new node
- *
- * Return: A pointer to the new node, or NULL on failure
- */
-avl_t *create_node(avl_t *parent, int value)
-{
-	avl_t *node = malloc(sizeof(avl_t));
-
-	if (node == NULL)
-		return (NULL);
-	node->n = value;
-	node->parent = parent;
-	node->left = NULL;
-	node->right = NULL;
-	return (node);
+    return (create_avl_node(array, 0, (int)size - 1, NULL));
 }
