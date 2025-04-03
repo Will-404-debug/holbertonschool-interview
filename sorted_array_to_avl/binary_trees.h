@@ -1,40 +1,29 @@
-#include <stdlib.h>
+#ifndef BINARY_SHMINARY
+#define BINARY_SHMINARY
+
 #include <stdio.h>
-#include "binary_trees.h"
 
 /**
- * print_array - Prints an array of integers
+ * struct binary_tree_s - Binary tree node
  *
- * @array: The array to be printed
- * @size: Size of the array
+ * @n: Integer stored in the node
+ * @parent: Pointer to the parent node
+ * @left: Pointer to the left child node
+ * @right: Pointer to the right child node
  */
-void print_array(const int *array, size_t size)
+struct binary_tree_s
 {
-    size_t i;
+    int n;
+    struct binary_tree_s *parent;
+    struct binary_tree_s *left;
+    struct binary_tree_s *right;
+};
 
-    for (i = 0; i < size; ++i)
-        printf("(%03d)", array[i]);
-    printf("\n");
-}
+typedef struct binary_tree_s binary_tree_t;
+typedef struct binary_tree_s avl_t;
 
-/**
- * main - Entry point
- *
- * Return: 0 on success, error code on failure
- */
-int main(void)
-{
-    avl_t *tree;
-    int array[] = {
-        1, 2, 20, 21, 22, 32, 34, 47, 62, 68,
-        79, 84, 87, 91, 95, 98
-    };
-    size_t n = sizeof(array) / sizeof(array[0]);
+avl_t *sorted_array_to_avl(int *array, size_t size);
+avl_t *build_avl(int *array, int start, int end, avl_t *parent);
+avl_t *create_node(avl_t *parent, int value);
 
-    tree = sorted_array_to_avl(array, n);
-    if (!tree)
-        return (1);
-    print_array(array, n);
-    binary_tree_print(tree);
-    return (0);
-}
+#endif
