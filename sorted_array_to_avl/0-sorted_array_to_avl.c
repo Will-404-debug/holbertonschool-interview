@@ -2,46 +2,47 @@
 #include <stdlib.h>
 
 /**
- * create_avl - Recursively builds an AVL tree from sorted array
- * @array: pointer to the first element
- * @start: starting index
- * @end: ending index
- * @parent: pointer to parent node
+ * create_avl - Recursively builds an AVL tree from a sorted array
+ * @array: Pointer to the first element of the array
+ * @start: Starting index of the subarray
+ * @end: Ending index of the subarray
+ * @parent: Pointer to the parent node
  *
- * Return: pointer to root node or NULL
+ * Return: Pointer to the created root node, or NULL on failure
  */
 avl_t *create_avl(int *array, int start, int end, avl_t *parent)
 {
-    int mid;
-    avl_t *root;
+	int mid;
+	avl_t *node;
 
-    if (start > end)
-        return (NULL);
+	if (start > end)
+		return (NULL);
 
-    mid = (start + end) / 2;
-    root = malloc(sizeof(avl_t));
-    if (!root)
-        return (NULL);
+	mid = (start + end) / 2;
 
-    root->n = array[mid];
-    root->parent = parent;
-    root->left = create_avl(array, start, mid - 1, root);
-    root->right = create_avl(array, mid + 1, end, root);
+	node = malloc(sizeof(avl_t));
+	if (!node)
+		return (NULL);
 
-    return (root);
+	node->n = array[mid];
+	node->parent = parent;
+	node->left = create_avl(array, start, mid - 1, node);
+	node->right = create_avl(array, mid + 1, end, node);
+
+	return (node);
 }
 
 /**
  * sorted_array_to_avl - Builds an AVL tree from a sorted array
- * @array: pointer to first element
- * @size: number of elements
+ * @array: Pointer to the first element of the array
+ * @size: Number of elements in the array
  *
- * Return: pointer to root node, or NULL
+ * Return: Pointer to the root node of the created AVL tree, or NULL on failure
  */
 avl_t *sorted_array_to_avl(int *array, size_t size)
 {
-    if (!array || size == 0)
-        return (NULL);
+	if (!array || size == 0)
+		return (NULL);
 
-    return (create_avl(array, 0, size - 1, NULL));
+	return (create_avl(array, 0, (int)size - 1, NULL));
 }
