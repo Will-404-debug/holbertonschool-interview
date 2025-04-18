@@ -1,31 +1,34 @@
 #!/usr/bin/node
-
 const request = require('request');
 
-if (process.argv.length < 3) {
-	console.error('Usage: ./0-starwars_characters.js <Movie_ID>');
-	process.exit(1);
+const filmID = process.argv[2];
+if (!filmID || isNaN(filmID)) {
+  console.log('Invalid film ID, ./0-starwars_characters.js <film_id>');
+  process.exit(1);
 }
 
-const movieId = process.argv[2];
-const url = `https://swapi-api.alx-tools.com/api/films/${movieId}/`;
+const url = 'https://swapi-api.hbtn.io/api/films/' + filmID;
 
-request(url, async (err, response, body) => {
-	if (err) return console.error(err);
+request(url, (error, response, body) => {
+  if (error) {
+    console.error('Error: ', error);
+    return;
+  }
 
-	const movie = JSON.parse(body);*
-	const characters = movie.characters;
+  const charData = JSON.parse(body).characters;
 
-	for (const charUrl of characters) {
-		await new Promise((resolve) => {
-			request(charUrl, (err, res, body) => {
-				if (!err) {
-					const character = JSON.parse(body);
-					console.log(character.name);
-				}
-				resolve();
-			});
-		});
-	}
+  const printCharacters = (index) => {
+    if (index >= charData.length) {
+      return;
+    }
+    request(charData[index], (error, response, body) => {
+      if (error) {
+        console.error('Error: ', error);
+        return;
+      }
+      console.log(JSON.parse(body).name);
+      printCharacters(index + 1);
+    });
+  };
+  printCharacters(0);
 });
-
