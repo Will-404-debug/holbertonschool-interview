@@ -1,14 +1,22 @@
 #!/usr/bin/python3
+"""
+A function to compute the amount of water retained
+after it rains, given a list of wall heights.
+"""
+
 
 def rain(walls):
     """
-    This function calculates the amount of water trapped between walls after rainfall.
+    This function calculates the amount of water
+    trapped between walls after rainfall.
 
     Parameters:
-    walls (list): A list of integers where each integer represents the height of a wall.
+    walls (list): A list of integers where each
+    integer represents the height of a wall.
 
     Returns:
-    int: The total amount of water that can be trapped between the walls.
+    int: The total amount of water that can
+    be trapped between the walls.
     """
     if not walls:
         return 0
