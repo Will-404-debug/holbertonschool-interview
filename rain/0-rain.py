@@ -1,6 +1,15 @@
 #!/usr/bin/python3
 
 def rain(walls):
+        """
+        This function calculates the amount of water trapped between walls after rainfall.
+
+        Parameters:
+        walls (list): A list of integers where each integer represents the height of a wall.
+
+        Returns:
+        int: The total amount of water that can be trapped between the walls.
+        """
     if not walls:
         return 0
 
@@ -25,3 +34,11 @@ def rain(walls):
         water += max(0, min(left_max[i], right_max[i]) - walls[i])
 
     return water
+
+# Example usage
+walls1 = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
+walls2 = [4, 2, 0, 3, 2, 5]
+
+print(rain(walls1))  # Output: 6
+print(rain(walls2))  # Output: 9
+
