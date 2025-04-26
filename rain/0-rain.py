@@ -35,10 +35,3 @@ def rain(walls):
 
     return water
 
-# Example usage
-walls1 = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
-walls2 = [4, 2, 0, 3, 2, 5]
-
-print(rain(walls1))  # Output: 6
-print(rain(walls2))  # Output: 9
-
