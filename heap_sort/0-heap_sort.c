@@ -58,6 +58,10 @@ void heap_sort(int *array, size_t size)
     size_t i;
     size_t temp;
 
+    // Check for NULL array or size <= 1 (no sorting needed)
+    if (array == NULL || size <= 1)
+    return;
+
     heapify(array, size);
 
     for (i = size - 1; i > 0; i--)
