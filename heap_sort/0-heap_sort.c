@@ -14,12 +14,14 @@ void sift_down(int *array, size_t size, size_t i, size_t *swaps)
     size_t right = 2 * i + 2;
     size_t temp;
 
+    // Ensure left and right indices are within bounds
     if (left < size && array[left] > array[largest])
         largest = left;
 
     if (right < size && array[right] > array[largest])
         largest = right;
 
+    // If largest is not the current index, swap and continue
     if (largest != i)
     {
         temp = array[i];
@@ -27,7 +29,7 @@ void sift_down(int *array, size_t size, size_t i, size_t *swaps)
         array[largest] = temp;
         (*swaps)++;
         print_array(array, size);  // Print array after each swap
-        sift_down(array, size, largest, swaps);
+        sift_down(array, size, largest, swaps);  // Recurse
     }
 }
 
