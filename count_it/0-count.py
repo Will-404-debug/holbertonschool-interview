@@ -54,3 +54,4 @@ def count_words(subreddit, word_list, after='', count={}):
     else:
         # Get next data batch
         return count_words(subreddit, word_list, data.get('after'), count)
+    
