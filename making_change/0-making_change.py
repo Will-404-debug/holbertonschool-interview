@@ -4,7 +4,7 @@
 
 def makeChange(coins, total):
     """
-    Determines the fewest number of coins needed 
+    Determines the fewest number of coins needed
     to meet the given amount total.
 
     Args:
